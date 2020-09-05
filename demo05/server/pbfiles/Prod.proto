@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package services;
+import "Models.proto";
+
+message ProdRequest{
+  int32 prod_id = 1;//传入的商品id
+}
+
+service ProdService{
+  rpc GetProdInfo(ProdRequest) returns (ProdModel){}
+}

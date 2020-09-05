@@ -53,6 +53,24 @@ http://localhost:8001/v1/prod/100
 
 ### proto数组
 
+[数组返回](https://github.com/reaperhero/grpc-microservice/tree/master/demo03)
+```
+1、Prod.pb.go
+protoc -I/usr/local/include -I. \
+		-I${GOPATH}/src \
+		-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+		--go_out=google/api/annotations.proto=github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis/google/api,plugins=grpc:../services  \
+		*.proto
+
+2、Prod.pb.gw.go
+protoc -I/usr/local/include -I. \
+		-I${GOPATH}/src \
+		-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+		--grpc-gateway_out=logtostderr=true:../services \
+		*.proto
+```
+
+
 ```
 go run rpcServer.go 
 
@@ -76,5 +94,34 @@ http://localhost:8001/v1/prods/4
         }
     ]
 }
+```
+
+
+### 枚举使用
+
+[枚举](https://github.com/reaperhero/grpc-microservice/tree/master/demo04)
+
+```shell script
+protoc --go_out=plugins=grpc:../services Prod.proto
+go run rpcServer.go
+
+
+go run rpcClient.go
+
+```
+
+
+### 外部proto
+
+[外部proto文件](https://github.com/reaperhero/grpc-microservice/tree/master/demo05)
+```
+protoc --go_out=plugins=grpc:../services Prod.proto
+protoc --go_out=plugins=grpc:../services Models.proto
+
+go run rpcServer.go
+
+
+go run rpcClient.go
+prod_id:101 prod_name:"testname" prod_price:20.5 
 ```
 
