@@ -1,14 +1,19 @@
-# 
+# grpc-microservice 
 
-- grpc 搭建
+## 使用教程
 
-生成Prod.pb.go
+### 基础rpc服务
+
+[基础rpc服务](https://github.com/reaperhero/grpc-microservice/tree/master/demo01)
 ```
 protoc --go_out=plugins=grpc:../services Prod.proto
 ```
 
 
-- grpc gateway
+### grpc gateway
+
+
+[http rpc代理](https://github.com/reaperhero/grpc-microservice/tree/master/demo02)
 
 1. 安装依赖
 
@@ -46,7 +51,30 @@ go run httpServer.go # rpc端口的代理服务
 http://localhost:8001/v1/prod/100
 ```
 
-
-
+### proto数组
 
 ```
+go run rpcServer.go 
+
+go run rpcClient.go 
+[prod_stock:12  prod_stock:13  prod_stock:14 ]
+ 
+
+go run httpServer.go # rpc端口的代理服务
+
+http://localhost:8001/v1/prods/4  
+{
+    "prodres": [
+        {
+            "prod_stock": 12
+        },
+        {
+            "prod_stock": 13
+        },
+        {
+            "prod_stock": 14
+        }
+    ]
+}
+```
+
